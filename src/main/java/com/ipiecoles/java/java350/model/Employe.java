@@ -68,11 +68,11 @@ public class Employe {
         case FRIDAY:
             if(d.isLeapYear()){
                 var =  var + 2;
-                break;
             }
             else {
                 var =  var + 1;
             }
+            break;
         case SATURDAY:var = var + 1;
                     break;
         }
