@@ -72,7 +72,6 @@ public class Employe {
             }
             else {
                 var =  var + 1;
-                break;
             }
         case SATURDAY:var = var + 1;
                     break;

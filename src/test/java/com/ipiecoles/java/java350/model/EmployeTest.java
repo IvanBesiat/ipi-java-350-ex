@@ -58,4 +58,20 @@ public class EmployeTest {
         // => 0
         Assertions.assertThat(nbAnneesAnciennete).isZero();
     }
+
+    @Test
+    public void testGetPrimeAnnuelManager(){
+        //Given
+        Employe manager = new Employe("Manage","Manager","M10200",LocalDate.now().minusYears(4),4000D,3,1.2);
+
+        //When
+        Double prime = manager.getPrimeAnnuelle();
+
+        //Then
+        // tempsPartiel = 1.2
+        // primeBase = 1000 / indicePrimeManager = 1.7
+        // primeAnciennete = 100 * anneeAnciennete(4) => 400
+        // (1000 * 1.7 + 400) * 1.2 = 2520
+        Assertions.assertThat(prime).isEqualTo(2520d);
+    }
 }
