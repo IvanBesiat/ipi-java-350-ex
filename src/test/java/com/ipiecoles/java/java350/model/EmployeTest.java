@@ -68,10 +68,14 @@ public class EmployeTest {
             "'M12345',0,2,1.0,1700.0",
             "'M12345',0,1,0.5,850.0",
             "'C12345',0,1,1.0,1000",
+            "'C12345',5,1,1.0,1500",
             "'C12345',2,1,1.0,1200",
-            ",0,1,1.0,1000.",
             "'C12345',0,2,1.0,2300.0",
-            "'C12345',0,1,0.5,500"
+            "'C12345',3,2,1.0,2600.0",
+            "'C12345',0,1,0.5,500",
+            ",0,1,1.0,1000.",
+            "'C12345',0,,1.0,1000"
+
     })
     public void testGetPrimeAnnuelManagerPerformanceBasePleinTemps(
         String matricule,
@@ -81,16 +85,45 @@ public class EmployeTest {
         Double prime
     ){
         //Given
-        Employe manager = new Employe("Manage","Manager",matricule,LocalDate.now().minusYears(nbAnneesAnciennete),2500d,performance,tauxActivite);
+        Employe employe = new Employe("Manage","Manager",matricule,LocalDate.now().minusYears(nbAnneesAnciennete),2500d,performance,tauxActivite);
 
         //When
-        Double primeObtenue = manager.getPrimeAnnuelle();
+        Double primeObtenue = employe.getPrimeAnnuelle();
 
         //Then
-        // tempsPartiel = 1.2
-        // primeBase = 1000 / indicePrimeManager = 1.7
-        // primeAnciennete = 100 * anneeAnciennete(4) => 400
-        // (1000 * 1.7 + 400) * 1.2 = 2520
         Assertions.assertThat(primeObtenue).isEqualTo(prime);
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "'M12345',0,1,1.0,11",
+            "'M12345',2,1,1.0,11",
+            "'M12345',0,2,1.0,11",
+            "'M12345',0,1,0.5,6",
+            "'C12345',0,1,1.0,11",
+            "'C12345',5,1,1.0,11",
+            "'C12345',2,1,1.0,11",
+            "'C12345',0,2,1.0,11",
+            "'C12345',3,2,1.0,11",
+            "'C12345',0,1,0.5,6",
+            ",0,1,1.0,11",
+            "'C12345',0,,1.0,11"
+
+    })
+    public void testGetNbRtt(
+            String matricule,
+            Integer nbAnneesAnciennete,
+            Integer performance,
+            Double tauxActivite,
+            Integer nbRttAttendu
+    ){
+        //Given
+        LocalDate d = LocalDate.now();
+        Employe employe = new Employe("Manage","Manager",matricule,LocalDate.now().minusYears(nbAnneesAnciennete),2500d,performance,tauxActivite);
+
+        //When
+        Integer nbRtt = employe.getNbRtt(d);
+        //Then
+        Assertions.assertThat(nbRtt).isEqualTo(nbRttAttendu);
     }
 }
