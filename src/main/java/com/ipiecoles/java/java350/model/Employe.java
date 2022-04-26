@@ -48,6 +48,8 @@ public class Employe {
      * @return
      */
     public Integer getNombreAnneeAnciennete() {
+        if(dateEmbauche == null || dateEmbauche.isAfter(LocalDate.now()))
+            return 0;
         return LocalDate.now().getYear() - dateEmbauche.getYear();
     }
 
@@ -64,9 +66,15 @@ public class Employe {
         switch (LocalDate.of(d.getYear(),1,1).getDayOfWeek()){
         case THURSDAY: if(d.isLeapYear()) var =  var + 1; break;
         case FRIDAY:
-        if(d.isLeapYear()) var =  var + 2;
-        else var =  var + 1;
-case SATURDAY:var = var + 1;
+            if(d.isLeapYear()){
+                var =  var + 2;
+                break;
+            }
+            else {
+                var =  var + 1;
+                break;
+            }
+        case SATURDAY:var = var + 1;
                     break;
         }
         int monInt = (int) Entreprise.joursFeries(d).stream().filter(localDate ->
