@@ -31,74 +31,21 @@ public class EmployeServiceIntegrationTest {
     }
 
     @Test
-    public void testEmbaucheEmployeWithEmptyDB() throws EmployeException {
-        //given
-
-        //when
-        employeService.embaucheEmploye("Besiat", "Ivan", Poste.MANAGER, NiveauEtude.MASTER, 1.0);
-        //then
-        Employe employeTest = employeRepository.findByMatricule("M00001");
-        Assertions.assertThat(employeRepository.findLastMatricule()).isEqualTo("00001");
-        Assertions.assertThat(employeTest.getMatricule()).isEqualTo("M00001");
-        Assertions.assertThat(employeTest.getNom()).isEqualTo("Besiat");
-        Assertions.assertThat(employeTest.getPrenom()).isEqualTo("Ivan");
-        Assertions.assertThat(employeTest.getSalaire()).isEqualTo(2129.71);
-        Assertions.assertThat(employeTest.getPerformance()).isEqualTo(Entreprise.PERFORMANCE_BASE);
-        Assertions.assertThat(employeTest.getDateEmbauche()).isEqualTo(LocalDate.now());
-        Assertions.assertThat(employeTest.getTempsPartiel()).isEqualTo((1.0));
-    }
-
-    @Test
     public void testEmbaucheEmployeWith1Employe() throws EmployeException {
         //given
         Employe manager = new Employe("BESIAT","Ivan","M00001", LocalDate.now(),2500d,2,1.0);
         employeRepository.save(manager);
         //when
-        employeService.embaucheEmploye("Besiat", "Ivan", Poste.COMMERCIAL, NiveauEtude.DOCTORAT, 1.0);
+        employeService.embaucheEmploye("Besiat", "Ivan", Poste.COMMERCIAL, NiveauEtude.DOCTORAT, 0.5);
         //then
         Employe employeTest = employeRepository.findByMatricule("C00002");
         Assertions.assertThat(employeRepository.findLastMatricule()).isEqualTo("00002");
         Assertions.assertThat(employeTest.getMatricule()).isEqualTo("C00002");
         Assertions.assertThat(employeTest.getNom()).isEqualTo("Besiat");
         Assertions.assertThat(employeTest.getPrenom()).isEqualTo("Ivan");
-        Assertions.assertThat(employeTest.getSalaire()).isEqualTo(2586.07);
+        Assertions.assertThat(employeTest.getSalaire()).isEqualTo(1293.04);
         Assertions.assertThat(employeTest.getPerformance()).isEqualTo(Entreprise.PERFORMANCE_BASE);
         Assertions.assertThat(employeTest.getDateEmbauche()).isEqualTo(LocalDate.now());
-        Assertions.assertThat(employeTest.getTempsPartiel()).isEqualTo((1.0));
-    }
-
-    @Test
-    public void testEmbaucheEmployeWithTempsPartielNull() throws EmployeException {
-        //given
-
-        //when
-        employeService.embaucheEmploye("Besiat", "Ivan", Poste.COMMERCIAL, NiveauEtude.DOCTORAT, null);
-        //then
-        Employe employeTest = employeRepository.findByMatricule("C00001");
-        Assertions.assertThat(employeRepository.findLastMatricule()).isEqualTo("00001");
-        Assertions.assertThat(employeTest.getMatricule()).isEqualTo("C00001");
-        Assertions.assertThat(employeTest.getNom()).isEqualTo("Besiat");
-        Assertions.assertThat(employeTest.getPrenom()).isEqualTo("Ivan");
-        Assertions.assertThat(employeTest.getSalaire()).isEqualTo(2586.07);
-        Assertions.assertThat(employeTest.getPerformance()).isEqualTo(Entreprise.PERFORMANCE_BASE);
-        Assertions.assertThat(employeTest.getDateEmbauche()).isEqualTo(LocalDate.now());
-        Assertions.assertThat(employeTest.getTempsPartiel()).isNull();
-    }
-
-    @Test
-    public void testEmbaucheEmployeWithMaxMatricule() throws EmployeException {
-        //given
-        Employe manager = new Employe("BESIAT","Ivan","M99999", LocalDate.now(),2500d,2,1.0);
-        employeRepository.save(manager);
-        //when
-        try {
-            employeService.embaucheEmploye("Besiat", "Ivan", Poste.COMMERCIAL, NiveauEtude.DOCTORAT, 1.0);
-            Assertions.fail("EmplyeException must be returned");
-        }
-        catch (EmployeException ex){
-            Assertions.assertThat(ex.getMessage()).isEqualTo("Limite des 100000 matricules atteinte !");
-        }
-        //then
-
+        Assertions.assertThat(employeTest.getTempsPartiel()).isEqualTo((0.5));
     }
 }
