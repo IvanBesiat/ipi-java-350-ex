@@ -51,7 +51,7 @@ public class EmployeServiceTest {
         Mockito.when(employeRepository.findLastMatricule()).thenReturn("00001");
         Mockito.when(employeRepository.findByMatricule("C00002")).thenReturn(null);
         //when
-        employeService.embaucheEmploye("Besiat", "Ivan", Poste.COMMERCIAL, NiveauEtude.DOCTORAT, 1.0);
+        employeService.embaucheEmploye("Besiat", "Ivan", Poste.COMMERCIAL, NiveauEtude.DOCTORAT, 0.5);
         //then
         ArgumentCaptor<Employe> employeCaptor = ArgumentCaptor.forClass(Employe.class);
         Mockito.verify(employeRepository).save(employeCaptor.capture());
@@ -59,10 +59,10 @@ public class EmployeServiceTest {
         Assertions.assertThat(employeCaptor.getValue().getMatricule()).isEqualTo("C00002");
         Assertions.assertThat(employeCaptor.getValue().getNom()).isEqualTo("Besiat");
         Assertions.assertThat(employeCaptor.getValue().getPrenom()).isEqualTo("Ivan");
-        Assertions.assertThat(employeCaptor.getValue().getSalaire()).isEqualTo(2586.07);
+        Assertions.assertThat(employeCaptor.getValue().getSalaire()).isEqualTo(1293.04);
         Assertions.assertThat(employeCaptor.getValue().getPerformance()).isEqualTo(Entreprise.PERFORMANCE_BASE);
         Assertions.assertThat(employeCaptor.getValue().getDateEmbauche()).isEqualTo(LocalDate.now());
-        Assertions.assertThat(employeCaptor.getValue().getTempsPartiel()).isEqualTo((1.0));
+        Assertions.assertThat(employeCaptor.getValue().getTempsPartiel()).isEqualTo((0.5));
     }
 
     @Test
@@ -93,8 +93,9 @@ public class EmployeServiceTest {
         Throwable thrown = Assertions.catchThrowable(() -> {
             employeService.embaucheEmploye("Besiat", "Ivan", Poste.COMMERCIAL, NiveauEtude.DOCTORAT, 1.0);
         });
-        Assertions.assertThat(thrown).hasMessageContaining("Limite des 100000 matricules atteinte !");
         //then
+        Assertions.assertThat(thrown).isInstanceOf(EmployeException.class)
+                .hasMessageContaining("Limite des 100000 matricules atteinte !");
     }
 
     @Test
@@ -106,7 +107,8 @@ public class EmployeServiceTest {
         Throwable thrown = Assertions.catchThrowable(() -> {
                     employeService.embaucheEmploye("Besiat", "Ivan", Poste.COMMERCIAL, NiveauEtude.DOCTORAT, 1.0);
                 });
-        Assertions.assertThat(thrown).hasMessageContaining("L'employé de matricule C00001 existe déjà en BDD");
         //then
+        Assertions.assertThat(thrown).isInstanceOf(EntityExistsException.class)
+                .hasMessageContaining("L'employé de matricule C00001 existe déjà en BDD");
     }
 }
