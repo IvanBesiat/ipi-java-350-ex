@@ -42,7 +42,7 @@ public class EmployeRepositoryTest {
         //when
         String matricule = employeRepository.findLastMatricule();
         //then
-        Assertions.assertThat(matricule).isEqualTo("01001");
+        Assertions.assertThat(matricule).isEqualTo("00007");
     }
 
     public void testFindLastMatriculeWith3Employe(){
