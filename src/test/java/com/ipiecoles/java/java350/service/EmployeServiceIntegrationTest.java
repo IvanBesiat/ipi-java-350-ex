@@ -16,7 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.time.LocalDate;
 
 @SpringBootTest
-public class EmployeServiceTest {
+public class EmployeServiceIntegrationTest {
 
     @Autowired
     EmployeService employeService;
@@ -65,6 +65,24 @@ public class EmployeServiceTest {
         Assertions.assertThat(employeTest.getPerformance()).isEqualTo(Entreprise.PERFORMANCE_BASE);
         Assertions.assertThat(employeTest.getDateEmbauche()).isEqualTo(LocalDate.now());
         Assertions.assertThat(employeTest.getTempsPartiel()).isEqualTo((1.0));
+    }
+
+    @Test
+    public void testEmbaucheEmployeWithTempsPartielNull() throws EmployeException {
+        //given
+
+        //when
+        employeService.embaucheEmploye("Besiat", "Ivan", Poste.COMMERCIAL, NiveauEtude.DOCTORAT, null);
+        //then
+        Employe employeTest = employeRepository.findByMatricule("C00001");
+        Assertions.assertThat(employeRepository.findLastMatricule()).isEqualTo("00001");
+        Assertions.assertThat(employeTest.getMatricule()).isEqualTo("C00001");
+        Assertions.assertThat(employeTest.getNom()).isEqualTo("Besiat");
+        Assertions.assertThat(employeTest.getPrenom()).isEqualTo("Ivan");
+        Assertions.assertThat(employeTest.getSalaire()).isEqualTo(2586.07);
+        Assertions.assertThat(employeTest.getPerformance()).isEqualTo(Entreprise.PERFORMANCE_BASE);
+        Assertions.assertThat(employeTest.getDateEmbauche()).isEqualTo(LocalDate.now());
+        Assertions.assertThat(employeTest.getTempsPartiel()).isNull();
     }
 
 //    @Test
