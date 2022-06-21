@@ -9,10 +9,7 @@ import com.ipiecoles.java.java350.repository.EmployeRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
+import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 import javax.persistence.EntityExistsException;
 import java.time.LocalDate;
@@ -30,6 +27,7 @@ public class EmployeServiceTest {
         //given
         Mockito.when(employeRepository.findLastMatricule()).thenReturn(null);
         Mockito.when(employeRepository.findByMatricule("M00001")).thenReturn(null);
+        Mockito.when(employeRepository.save(Mockito.any(Employe.class))).thenAnswer(AdditionalAnswers.returnsFirstArg());
         //when
         employeService.embaucheEmploye("Besiat", "Ivan", Poste.MANAGER, NiveauEtude.MASTER, 1.0);
         //then
@@ -50,6 +48,7 @@ public class EmployeServiceTest {
         //given
         Mockito.when(employeRepository.findLastMatricule()).thenReturn("00001");
         Mockito.when(employeRepository.findByMatricule("C00002")).thenReturn(null);
+        Mockito.when(employeRepository.save(Mockito.any(Employe.class))).thenAnswer(AdditionalAnswers.returnsFirstArg());
         //when
         employeService.embaucheEmploye("Besiat", "Ivan", Poste.COMMERCIAL, NiveauEtude.DOCTORAT, 0.5);
         //then
@@ -70,6 +69,7 @@ public class EmployeServiceTest {
         //given
         Mockito.when(employeRepository.findLastMatricule()).thenReturn(null);
         Mockito.when(employeRepository.findByMatricule("C00001")).thenReturn(null);
+        Mockito.when(employeRepository.save(Mockito.any(Employe.class))).thenAnswer(AdditionalAnswers.returnsFirstArg());
         //when
         employeService.embaucheEmploye("Besiat", "Ivan", Poste.COMMERCIAL, NiveauEtude.DOCTORAT, null);
         //then
