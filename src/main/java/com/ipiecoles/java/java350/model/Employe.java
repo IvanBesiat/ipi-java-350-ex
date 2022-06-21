@@ -62,7 +62,7 @@ public class Employe {
     }
 
     public Integer getNbRtt(LocalDate d){
-        int i1 = d.isLeapYear() ? 365 : 366;
+        int nbJourAnnee = d.isLeapYear() ? 366 : 365;
         int nbRttBase = 104;
         switch (LocalDate.of(d.getYear(),1,1).getDayOfWeek()){
         case THURSDAY: if(d.isLeapYear()) nbRttBase =  nbRttBase + 1; break;
@@ -79,7 +79,7 @@ public class Employe {
         }
         int monInt = (int) Entreprise.joursFeries(d).stream().filter(localDate ->
                 localDate.getDayOfWeek().getValue() <= DayOfWeek.FRIDAY.getValue()).count();
-        return (int) Math.ceil((i1 - Entreprise.NB_JOURS_MAX_FORFAIT - nbRttBase - Entreprise.NB_CONGES_BASE - monInt) * tempsPartiel);
+        return (int) Math.ceil((nbJourAnnee - Entreprise.NB_JOURS_MAX_FORFAIT - nbRttBase - Entreprise.NB_CONGES_BASE - monInt) * tempsPartiel);
     }
 
     /**
@@ -118,7 +118,9 @@ public class Employe {
     }
 
     //Augmenter salaire
-    //public void augmenterSalaire(double pourcentage){}
+    public void augmenterSalaire(double pourcentage){
+
+    }
 
     public Long getId() {
         return id;

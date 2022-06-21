@@ -84,7 +84,7 @@ Tester de façon intégrée un cas nominal de la méthode `embaucheEmploye` de l
 
 # Evaluation
 
-Commencer par faire une branche `evaluation` à partir de votre branche `master` une fois le TP terminé. Travailler sur cette branche pour l'évaluation.
+Commencer par faire une branche `eval` à partir de votre branche `master` une fois le TP terminé. Travailler sur cette branche pour l'évaluation.
 
 ## Tests unitaires et TDD
 
@@ -96,13 +96,12 @@ Infos :
   - 2022 : l'année est non bissextile, a débuté un samedi et il y a 7 jours fériés ne tombant pas le week-end.
   - 2032 : l'année est bissextile, a débuté un jeudi et il y a 7 jours fériés ne tombant pas le week-end.
 
-- Tester sans dépendance à la BDD la méthode `calculPerformanceCommercial` d'`EmployeService`
+- Tester sans dépendance à la BDD la méthode `calculPerformanceCommercial` d'`EmployeService`(avec mockito)
 
 ## Tests d'intégration
 
-- Tester de manière intégrée une cas nominal de la méthode précédente
+- Tester de manière intégrée un cas nominal de la méthode précédente
 - Tester de manière intégrée la méthode d'`EmployeRepository` `avgPerformanceWhereMatriculeStartsWith`
-- BONUS Ecrire un test d'acceptation Gauge pour la fonctionnalité de calcul de performance d'un commercial.
 
 ## Autres
 
