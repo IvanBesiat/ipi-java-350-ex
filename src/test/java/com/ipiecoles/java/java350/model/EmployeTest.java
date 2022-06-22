@@ -1,10 +1,12 @@
 package com.ipiecoles.java.java350.model;
 
+import com.ipiecoles.java.java350.exception.EmployeException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import javax.persistence.EntityExistsException;
 import java.time.LocalDate;
 
 public class EmployeTest {
@@ -96,34 +98,77 @@ public class EmployeTest {
 
     @ParameterizedTest
     @CsvSource({
-            "'M12345',0,1,1.0,11",
-            "'M12345',2,1,1.0,11",
-            "'M12345',0,2,1.0,11",
-            "'M12345',0,1,0.5,6",
-            "'C12345',0,1,1.0,11",
-            "'C12345',5,1,1.0,11",
-            "'C12345',2,1,1.0,11",
-            "'C12345',0,2,1.0,11",
-            "'C12345',3,2,1.0,11",
-            "'C12345',0,1,0.5,6",
-            ",0,1,1.0,11",
-            "'C12345',0,,1.0,11"
-
+            "'M12345',0,1,1.0,50.5,2500.0",
+            "'M12345',0,1,1.0,100.0,0"
     })
-    public void testGetNbRtt(
+    public void testAuguementerSalaireWithoutException(
             String matricule,
             Integer nbAnneesAnciennete,
             Integer performance,
             Double tauxActivite,
-            Integer nbRttAttendu
-    ){
-        //Given
-        LocalDate d = LocalDate.now();
-        Employe employe = new Employe("Manage","Manager",matricule,LocalDate.now().minusYears(nbAnneesAnciennete),2500d,performance,tauxActivite);
-
-        //When
-        Integer nbRtt = employe.getNbRtt(d);
-        //Then
-        Assertions.assertThat(nbRtt).isEqualTo(nbRttAttendu);
+            Double pourcentage,
+            Double salaireAuguemente
+    ) throws EmployeException {
+        //given
+        Employe employe = new Employe("Manage","Manager",matricule,LocalDate.now(),2500d,performance,tauxActivite);
+        //when
+        employe.augmenterSalaire(pourcentage);
+        //then
+        Assertions.assertThat(employe.getSalaire()).isEqualTo(salaireAuguemente);
     }
+
+    @ParameterizedTest
+    @CsvSource({
+            "'M12345',1,1.0,0.0",
+            "'M12345',1,0.5,-100.0"
+    })
+    public void testAuguementerSalaireExcepction(
+            String matricule,
+            Integer performance,
+            Double tauxActivite,
+            Double pourcentage
+    ) {
+        //given
+        Employe employe = new Employe("Manage","Manager",matricule,LocalDate.now(),2500d,performance,tauxActivite);
+        //when
+        Throwable thrown = Assertions.catchThrowable(() -> {
+            employe.augmenterSalaire(pourcentage);
+        });
+        //then
+        Assertions.assertThat(thrown).isInstanceOf(EmployeException.class)
+                .hasMessageContaining("Une auguementation de salaire ne peut pas être null ou négative.");
+    }
+
+//    @ParameterizedTest
+//    @CsvSource({
+//            "'M12345',0,1,1.0,10",
+//            "'M12345',2,1,1.0,10",
+//            "'M12345',0,2,1.0,10",
+//            "'M12345',0,1,0.5,6",
+//            "'C12345',0,1,1.0,11",
+//            "'C12345',5,1,1.0,11",
+//            "'C12345',2,1,1.0,11",
+//            "'C12345',0,2,1.0,11",
+//            "'C12345',3,2,1.0,11",
+//            "'C12345',0,1,0.5,6",
+//            "'C12345',0,1,1.0,11",
+//            "'C12345',0,,1.0,11"
+//
+//    })
+//    public void testGetNbRtt(
+//            String matricule,
+//            Integer nbAnneesAnciennete,
+//            Integer performance,
+//            Double tauxActivite,
+//            Integer nbRttAttendu
+//    ){
+//        //Given
+//        LocalDate d = LocalDate.now();
+//        Employe employe = new Employe("Manage","Manager",matricule,LocalDate.now().minusYears(nbAnneesAnciennete),2500d,performance,tauxActivite);
+//
+//        //When
+//        Integer nbRtt = employe.getNbRtt(d);
+//        //Then
+//        Assertions.assertThat(nbRtt).isEqualTo(nbRttAttendu);
+//    }
 }
