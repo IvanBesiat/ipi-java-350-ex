@@ -135,36 +135,30 @@ public class EmployeTest {
                 .hasMessageContaining("Une auguementation de salaire ne peut pas être null ou négative.");
     }
 
-//    @ParameterizedTest
-//    @CsvSource({
-//            "'M12345',0,1,1.0,10",
-//            "'M12345',2,1,1.0,10",
-//            "'M12345',0,2,1.0,10",
-//            "'M12345',0,1,0.5,6",
-//            "'C12345',0,1,1.0,11",
-//            "'C12345',5,1,1.0,11",
-//            "'C12345',2,1,1.0,11",
-//            "'C12345',0,2,1.0,11",
-//            "'C12345',3,2,1.0,11",
-//            "'C12345',0,1,0.5,6",
-//            "'C12345',0,1,1.0,11",
-//            "'C12345',0,,1.0,11"
-//
-//    })
-//    public void testGetNbRtt(
-//            String matricule,
-//            Integer nbAnneesAnciennete,
-//            Integer performance,
-//            Double tauxActivite,
-//            Integer nbRttAttendu
-//    ){
-//        //Given
-//        LocalDate d = LocalDate.now();
-//        Employe employe = new Employe("Manage","Manager",matricule,LocalDate.now().minusYears(nbAnneesAnciennete),2500d,performance,tauxActivite);
-//
-//        //When
-//        Integer nbRtt = employe.getNbRtt(d);
-//        //Then
-//        Assertions.assertThat(nbRtt).isEqualTo(nbRttAttendu);
-//    }
+    @ParameterizedTest
+    @CsvSource({
+            "'C12345',-1,1,1.0,9",
+            "'C12345',2,1,1.0,10",
+            "'C12345',0,2,1.0,10",
+            "'C12345',3,2,1.0,8",
+            "'C12345',-2,1,0.5,5",
+            "'C12345',-3,1,1.0,8"
+
+    })
+    public void testGetNbRtt(
+            String matricule,
+            Integer nbAnneesAnciennete,
+            Integer performance,
+            Double tauxActivite,
+            Integer nbRttAttendu
+    ){
+        //Given
+        LocalDate d = LocalDate.now().minusYears(nbAnneesAnciennete);
+        Employe employe = new Employe("Manage","Manager",matricule,LocalDate.now().minusYears(nbAnneesAnciennete),2500d,performance,tauxActivite);
+
+        //When
+        Integer nbRtt = employe.getNbRtt(d);
+        //Then
+        Assertions.assertThat(nbRtt).isEqualTo(nbRttAttendu);
+    }
 }
