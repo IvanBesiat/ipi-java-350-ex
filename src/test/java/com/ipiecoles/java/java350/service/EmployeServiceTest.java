@@ -86,7 +86,7 @@ public class EmployeServiceTest {
     }
 
     @Test
-    public void testEmbaucheEmployeWithMaxMatricule() throws EmployeException {
+    public void testEmbaucheEmployeWithMaxMatricule() {
         //given
         Mockito.when(employeRepository.findLastMatricule()).thenReturn("99999");
         //when
@@ -99,7 +99,7 @@ public class EmployeServiceTest {
     }
 
     @Test
-    public void testEmbaucheEmployeWithExistingMatricule() throws EmployeException {
+    public void testEmbaucheEmployeWithExistingMatricule() {
         //given
         Mockito.when(employeRepository.findLastMatricule()).thenReturn(null);
         Mockito.when(employeRepository.findByMatricule("C00001")).thenReturn(new Employe());
