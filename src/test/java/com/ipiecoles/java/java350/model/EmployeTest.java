@@ -100,7 +100,7 @@ public class EmployeTest {
             "'M12345',1,1.0,50.5,3762.5",
             "'M12345',1,1.0,100.0,5000.0"
     })
-    public void testAuguementerSalaireWithoutException(
+    void testAuguementerSalaireWithoutException(
             String matricule,
             Integer performance,
             Double tauxActivite,
@@ -120,7 +120,7 @@ public class EmployeTest {
             "'M12345',1,1.0,0.0",
             "'M12345',1,0.5,-100.0"
     })
-    public void testAuguementerSalaireExcepction(
+    void testAuguementerSalaireExcepction(
             String matricule,
             Integer performance,
             Double tauxActivite,
