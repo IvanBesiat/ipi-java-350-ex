@@ -1,0 +1,63 @@
+22-06-2022 14:03:46.901 INFO  c.i.j.java350.service.EmployeService.embaucheEmploye - Embauche de l'employé : Besiat Ivan COMMERCIAL DOCTORAT 0.5
+22-06-2022 14:03:46.913 INFO  c.i.j.java350.service.EmployeService.embaucheEmploye - Calcul du salaire en fonction du rythme de travail
+22-06-2022 14:03:46.913 INFO  c.i.j.java350.service.EmployeService.embaucheEmploye - Salaire calculé : 1293.04
+22-06-2022 14:03:46.914 INFO  c.i.j.java350.service.EmployeService.embaucheEmploye - Employé avant la sauvegarde Employe{id=null, nom='Besiat', prenom='Ivan', matricule='C00002', dateEmbauche=2022-06-22, salaire=1293.04, performance=1, tempsPartiel=0.5}
+22-06-2022 14:03:46.914 INFO  c.i.j.java350.service.EmployeService.embaucheEmploye - Employé après la sauvegarde Employe{id=null, nom='Besiat', prenom='Ivan', matricule='C00002', dateEmbauche=2022-06-22, salaire=1293.04, performance=1, tempsPartiel=0.5}
+22-06-2022 14:03:46.945 INFO  c.i.j.java350.service.EmployeService.embaucheEmploye - Embauche de l'employé : Besiat Ivan MANAGER MASTER 1.0
+22-06-2022 14:03:46.945 WARN  c.i.j.java350.service.EmployeService.embaucheEmploye - Aucun employe trouvé, initialisation du matricule initial 00000
+22-06-2022 14:03:46.946 INFO  c.i.j.java350.service.EmployeService.embaucheEmploye - Calcul du salaire en fonction du rythme de travail
+22-06-2022 14:03:46.946 INFO  c.i.j.java350.service.EmployeService.embaucheEmploye - Salaire calculé : 2129.71
+22-06-2022 14:03:46.946 INFO  c.i.j.java350.service.EmployeService.embaucheEmploye - Employé avant la sauvegarde Employe{id=null, nom='Besiat', prenom='Ivan', matricule='M00001', dateEmbauche=2022-06-22, salaire=2129.71, performance=1, tempsPartiel=1.0}
+22-06-2022 14:03:46.947 INFO  c.i.j.java350.service.EmployeService.embaucheEmploye - Employé après la sauvegarde Employe{id=null, nom='Besiat', prenom='Ivan', matricule='M00001', dateEmbauche=2022-06-22, salaire=2129.71, performance=1, tempsPartiel=1.0}
+22-06-2022 14:03:46.962 INFO  c.i.j.java350.service.EmployeService.embaucheEmploye - Embauche de l'employé : Besiat Ivan COMMERCIAL DOCTORAT 1.0
+22-06-2022 14:03:46.964 WARN  c.i.j.java350.service.EmployeService.embaucheEmploye - Aucun employe trouvé, initialisation du matricule initial 00000
+22-06-2022 14:03:46.965 ERROR c.i.j.java350.service.EmployeService.embaucheEmploye - L'employé de matricule C00001 existe déjà en BDD
+22-06-2022 14:03:46.980 INFO  c.i.j.java350.service.EmployeService.embaucheEmploye - Embauche de l'employé : Besiat Ivan COMMERCIAL DOCTORAT 1.0
+22-06-2022 14:03:46.981 ERROR c.i.j.java350.service.EmployeService.embaucheEmploye - Limite des 100000 matricules atteinte !
+22-06-2022 14:03:46.992 INFO  c.i.j.java350.service.EmployeService.embaucheEmploye - Embauche de l'employé : Besiat Ivan COMMERCIAL DOCTORAT null
+22-06-2022 14:03:46.993 WARN  c.i.j.java350.service.EmployeService.embaucheEmploye - Aucun employe trouvé, initialisation du matricule initial 00000
+22-06-2022 14:03:46.995 INFO  c.i.j.java350.service.EmployeService.embaucheEmploye - Salaire calculé : 2586.07
+22-06-2022 14:03:46.995 INFO  c.i.j.java350.service.EmployeService.embaucheEmploye - Employé avant la sauvegarde Employe{id=null, nom='Besiat', prenom='Ivan', matricule='C00001', dateEmbauche=2022-06-22, salaire=2586.07, performance=1, tempsPartiel=null}
+22-06-2022 14:03:46.996 INFO  c.i.j.java350.service.EmployeService.embaucheEmploye - Employé après la sauvegarde Employe{id=null, nom='Besiat', prenom='Ivan', matricule='C00001', dateEmbauche=2022-06-22, salaire=2586.07, performance=1, tempsPartiel=null}
+22-06-2022 14:05:34.997 INFO  c.i.j.java350.service.EmployeService.embaucheEmploye - Embauche de l'employé : Besiat Ivan COMMERCIAL DOCTORAT 0.5
+22-06-2022 14:05:35.069 INFO  c.i.j.java350.service.EmployeService.embaucheEmploye - Calcul du salaire en fonction du rythme de travail
+22-06-2022 14:05:35.070 INFO  c.i.j.java350.service.EmployeService.embaucheEmploye - Salaire calculé : 1293.04
+22-06-2022 14:05:35.070 INFO  c.i.j.java350.service.EmployeService.embaucheEmploye - Employé avant la sauvegarde Employe{id=null, nom='Besiat', prenom='Ivan', matricule='C00002', dateEmbauche=2022-06-22, salaire=1293.04, performance=1, tempsPartiel=0.5}
+22-06-2022 14:05:35.072 INFO  c.i.j.java350.service.EmployeService.embaucheEmploye - Employé après la sauvegarde Employe{id=null, nom='Besiat', prenom='Ivan', matricule='C00002', dateEmbauche=2022-06-22, salaire=1293.04, performance=1, tempsPartiel=0.5}
+22-06-2022 14:05:35.113 INFO  c.i.j.java350.service.EmployeService.embaucheEmploye - Embauche de l'employé : Besiat Ivan MANAGER MASTER 1.0
+22-06-2022 14:05:35.114 WARN  c.i.j.java350.service.EmployeService.embaucheEmploye - Aucun employe trouvé, initialisation du matricule initial 00000
+22-06-2022 14:05:35.114 INFO  c.i.j.java350.service.EmployeService.embaucheEmploye - Calcul du salaire en fonction du rythme de travail
+22-06-2022 14:05:35.114 INFO  c.i.j.java350.service.EmployeService.embaucheEmploye - Salaire calculé : 2129.71
+22-06-2022 14:05:35.115 INFO  c.i.j.java350.service.EmployeService.embaucheEmploye - Employé avant la sauvegarde Employe{id=null, nom='Besiat', prenom='Ivan', matricule='M00001', dateEmbauche=2022-06-22, salaire=2129.71, performance=1, tempsPartiel=1.0}
+22-06-2022 14:05:35.115 INFO  c.i.j.java350.service.EmployeService.embaucheEmploye - Employé après la sauvegarde Employe{id=null, nom='Besiat', prenom='Ivan', matricule='M00001', dateEmbauche=2022-06-22, salaire=2129.71, performance=1, tempsPartiel=1.0}
+22-06-2022 14:05:35.127 INFO  c.i.j.java350.service.EmployeService.embaucheEmploye - Embauche de l'employé : Besiat Ivan COMMERCIAL DOCTORAT 1.0
+22-06-2022 14:05:35.129 WARN  c.i.j.java350.service.EmployeService.embaucheEmploye - Aucun employe trouvé, initialisation du matricule initial 00000
+22-06-2022 14:05:35.130 ERROR c.i.j.java350.service.EmployeService.embaucheEmploye - L'employé de matricule C00001 existe déjà en BDD
+22-06-2022 14:05:35.143 INFO  c.i.j.java350.service.EmployeService.embaucheEmploye - Embauche de l'employé : Besiat Ivan COMMERCIAL DOCTORAT 1.0
+22-06-2022 14:05:35.144 ERROR c.i.j.java350.service.EmployeService.embaucheEmploye - Limite des 100000 matricules atteinte !
+22-06-2022 14:05:35.153 INFO  c.i.j.java350.service.EmployeService.embaucheEmploye - Embauche de l'employé : Besiat Ivan COMMERCIAL DOCTORAT null
+22-06-2022 14:05:35.153 WARN  c.i.j.java350.service.EmployeService.embaucheEmploye - Aucun employe trouvé, initialisation du matricule initial 00000
+22-06-2022 14:05:35.154 INFO  c.i.j.java350.service.EmployeService.embaucheEmploye - Salaire calculé : 2586.07
+22-06-2022 14:05:35.155 INFO  c.i.j.java350.service.EmployeService.embaucheEmploye - Employé avant la sauvegarde Employe{id=null, nom='Besiat', prenom='Ivan', matricule='C00001', dateEmbauche=2022-06-22, salaire=2586.07, performance=1, tempsPartiel=null}
+22-06-2022 14:05:35.155 INFO  c.i.j.java350.service.EmployeService.embaucheEmploye - Employé après la sauvegarde Employe{id=null, nom='Besiat', prenom='Ivan', matricule='C00001', dateEmbauche=2022-06-22, salaire=2586.07, performance=1, tempsPartiel=null}
+22-06-2022 14:07:11.537 INFO  c.i.j.java350.service.EmployeService.embaucheEmploye - Embauche de l'employé : Besiat Ivan COMMERCIAL DOCTORAT 0.5
+22-06-2022 14:07:11.554 INFO  c.i.j.java350.service.EmployeService.embaucheEmploye - Calcul du salaire en fonction du rythme de travail
+22-06-2022 14:07:11.554 INFO  c.i.j.java350.service.EmployeService.embaucheEmploye - Salaire calculé : 1293.04
+22-06-2022 14:07:11.555 INFO  c.i.j.java350.service.EmployeService.embaucheEmploye - Employé avant la sauvegarde Employe{id=null, nom='Besiat', prenom='Ivan', matricule='C00002', dateEmbauche=2022-06-22, salaire=1293.04, performance=1, tempsPartiel=0.5}
+22-06-2022 14:07:11.556 INFO  c.i.j.java350.service.EmployeService.embaucheEmploye - Employé après la sauvegarde Employe{id=null, nom='Besiat', prenom='Ivan', matricule='C00002', dateEmbauche=2022-06-22, salaire=1293.04, performance=1, tempsPartiel=0.5}
+22-06-2022 14:07:11.606 INFO  c.i.j.java350.service.EmployeService.embaucheEmploye - Embauche de l'employé : Besiat Ivan MANAGER MASTER 1.0
+22-06-2022 14:07:11.607 WARN  c.i.j.java350.service.EmployeService.embaucheEmploye - Aucun employe trouvé, initialisation du matricule initial 00000
+22-06-2022 14:07:11.608 INFO  c.i.j.java350.service.EmployeService.embaucheEmploye - Calcul du salaire en fonction du rythme de travail
+22-06-2022 14:07:11.608 INFO  c.i.j.java350.service.EmployeService.embaucheEmploye - Salaire calculé : 2129.71
+22-06-2022 14:07:11.609 INFO  c.i.j.java350.service.EmployeService.embaucheEmploye - Employé avant la sauvegarde Employe{id=null, nom='Besiat', prenom='Ivan', matricule='M00001', dateEmbauche=2022-06-22, salaire=2129.71, performance=1, tempsPartiel=1.0}
+22-06-2022 14:07:11.609 INFO  c.i.j.java350.service.EmployeService.embaucheEmploye - Employé après la sauvegarde Employe{id=null, nom='Besiat', prenom='Ivan', matricule='M00001', dateEmbauche=2022-06-22, salaire=2129.71, performance=1, tempsPartiel=1.0}
+22-06-2022 14:07:11.621 INFO  c.i.j.java350.service.EmployeService.embaucheEmploye - Embauche de l'employé : Besiat Ivan COMMERCIAL DOCTORAT 1.0
+22-06-2022 14:07:11.622 WARN  c.i.j.java350.service.EmployeService.embaucheEmploye - Aucun employe trouvé, initialisation du matricule initial 00000
+22-06-2022 14:07:11.622 ERROR c.i.j.java350.service.EmployeService.embaucheEmploye - L'employé de matricule C00001 existe déjà en BDD
+22-06-2022 14:07:11.635 INFO  c.i.j.java350.service.EmployeService.embaucheEmploye - Embauche de l'employé : Besiat Ivan COMMERCIAL DOCTORAT 1.0
+22-06-2022 14:07:11.636 ERROR c.i.j.java350.service.EmployeService.embaucheEmploye - Limite des 100000 matricules atteinte !
+22-06-2022 14:07:11.647 INFO  c.i.j.java350.service.EmployeService.embaucheEmploye - Embauche de l'employé : Besiat Ivan COMMERCIAL DOCTORAT null
+22-06-2022 14:07:11.647 WARN  c.i.j.java350.service.EmployeService.embaucheEmploye - Aucun employe trouvé, initialisation du matricule initial 00000
+22-06-2022 14:07:11.648 INFO  c.i.j.java350.service.EmployeService.embaucheEmploye - Salaire calculé : 2586.07
+22-06-2022 14:07:11.648 INFO  c.i.j.java350.service.EmployeService.embaucheEmploye - Employé avant la sauvegarde Employe{id=null, nom='Besiat', prenom='Ivan', matricule='C00001', dateEmbauche=2022-06-22, salaire=2586.07, performance=1, tempsPartiel=null}
+22-06-2022 14:07:11.649 INFO  c.i.j.java350.service.EmployeService.embaucheEmploye - Employé après la sauvegarde Employe{id=null, nom='Besiat', prenom='Ivan', matricule='C00001', dateEmbauche=2022-06-22, salaire=2586.07, performance=1, tempsPartiel=null}

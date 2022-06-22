@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import javax.persistence.EntityExistsException;
 import java.time.LocalDate;
 
 public class EmployeTest {
@@ -98,12 +97,11 @@ public class EmployeTest {
 
     @ParameterizedTest
     @CsvSource({
-            "'M12345',0,1,1.0,50.5,2500.0",
-            "'M12345',0,1,1.0,100.0,0"
+            "'M12345',1,1.0,50.5,3762.5",
+            "'M12345',1,1.0,100.0,5000.0"
     })
     public void testAuguementerSalaireWithoutException(
             String matricule,
-            Integer nbAnneesAnciennete,
             Integer performance,
             Double tauxActivite,
             Double pourcentage,
@@ -131,9 +129,7 @@ public class EmployeTest {
         //given
         Employe employe = new Employe("Manage","Manager",matricule,LocalDate.now(),2500d,performance,tauxActivite);
         //when
-        Throwable thrown = Assertions.catchThrowable(() -> {
-            employe.augmenterSalaire(pourcentage);
-        });
+        Throwable thrown = Assertions.catchThrowable(() -> employe.augmenterSalaire(pourcentage));
         //then
         Assertions.assertThat(thrown).isInstanceOf(EmployeException.class)
                 .hasMessageContaining("Une auguementation de salaire ne peut pas être null ou négative.");
