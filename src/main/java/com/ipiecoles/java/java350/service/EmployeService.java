@@ -18,7 +18,7 @@ import java.time.LocalDate;
 @Service
 public class EmployeService {
 
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private EmployeRepository employeRepository;
@@ -51,7 +51,7 @@ public class EmployeService {
         }
         //... et incrémentation
         logger.trace("Incrémentation du dernier matricule");
-        Integer numeroMatricule = Integer.parseInt(lastMatricule) + 1;
+        int numeroMatricule = Integer.parseInt(lastMatricule) + 1;
 
         if(numeroMatricule >= 100000){
             logger.error("Limite des 100000 matricules atteinte !");
@@ -76,7 +76,7 @@ public class EmployeService {
         }
 
         //Calcul du salaire
-        Double salaire = Entreprise.COEFF_SALAIRE_ETUDES.get(niveauEtude) * Entreprise.SALAIRE_BASE;
+        double salaire = Entreprise.COEFF_SALAIRE_ETUDES.get(niveauEtude) * Entreprise.SALAIRE_BASE;
         if(tempsPartiel != null){
             logger.info("Calcul du salaire en fonction du rythme de travail");
             salaire = salaire * tempsPartiel;
@@ -132,28 +132,19 @@ public class EmployeService {
 
         Integer performance = Entreprise.PERFORMANCE_BASE;
         //Cas 2
-        if(caTraite >= objectifCa*0.8 && caTraite < objectifCa*0.95){
+        if(caTraite >= objectifCa*0.8 && caTraite < objectifCa*0.95)
             performance = Math.max(Entreprise.PERFORMANCE_BASE, employe.getPerformance() - 2);
-        }
         //Cas 3
-        else if(caTraite >= objectifCa*0.95 && caTraite <= objectifCa*1.05){
-            performance = Math.max(Entreprise.PERFORMANCE_BASE, employe.getPerformance());
-        }
+        else if(caTraite >= objectifCa*0.95 && caTraite <= objectifCa*1.05) performance = employe.getPerformance();
         //Cas 4
-        else if(caTraite <= objectifCa*1.2 && caTraite > objectifCa*1.05){
-            performance = employe.getPerformance() + 1;
-        }
+        else if(caTraite <= objectifCa*1.2 && caTraite > objectifCa*1.05) performance = employe.getPerformance() + 1;
         //Cas 5
-        else if(caTraite > objectifCa*1.2){
-            performance = employe.getPerformance() + 4;
-        }
+        else if(caTraite > objectifCa*1.2) performance = employe.getPerformance() + 4;
         //Si autre cas, on reste à la performance de base.
 
         //Calcul de la performance moyenne
         Double performanceMoyenne = employeRepository.avgPerformanceWhereMatriculeStartsWith("C");
-        if(performanceMoyenne != null && performance > performanceMoyenne){
-            performance++;
-        }
+        if(performanceMoyenne != null && performance > performanceMoyenne) performance++;
 
         //Affectation et sauvegarde
         employe.setPerformance(performance);

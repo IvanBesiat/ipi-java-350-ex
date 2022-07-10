@@ -48,7 +48,7 @@ public class Employe {
     /**
      * Méthode calculant le nombre d'années d'ancienneté à partir de la date d'embauche
      *
-     * @return
+     * @return le nombre d'années d'ancienneté de l'employé
      */
     public Integer getNombreAnneeAnciennete() {
         if (dateEmbauche == null || dateEmbauche.isAfter(LocalDate.now()))
@@ -152,9 +152,8 @@ public class Employe {
     /**
      * @param nom the nom to set
      */
-    public Employe setNom(String nom) {
+    public void setNom(String nom) {
         this.nom = nom;
-        return this;
     }
 
     /**

@@ -137,27 +137,28 @@ public class EmployeTest {
 
     @ParameterizedTest
     @CsvSource({
-            "'C12345',-1,1,1.0,9",
-            "'C12345',2,1,1.0,10",
-            "'C12345',0,2,1.0,10",
-            "'C12345',3,2,1.0,8",
-            "'C12345',-2,1,0.5,5",
-            "'C12345',-10,1,1.0,11"
+            "2019-01-01,1.0,8",
+            "2021-01-01,1.0,10",
+            "2022-01-01,1.0,10",
+            "2032-01-01,1.0,11",
+            "2044-01-01,1.0,10",
+            "2019-01-01,0.5,4",
+            "2021-01-01,0.5,5",
+            "2022-01-01,0.5,5",
+            "2032-01-01,0.5,6",
+            "2044-01-01,0.5,5"
 
     })
     public void testGetNbRtt(
-            String matricule,
-            Integer nbAnneesAnciennete,
-            Integer performance,
+            LocalDate date,
             Double tauxActivite,
             Integer nbRttAttendu
     ){
         //Given
-        LocalDate d = LocalDate.now().minusYears(nbAnneesAnciennete);
-        Employe employe = new Employe("Manage","Manager",matricule,LocalDate.now().minusYears(nbAnneesAnciennete),2500d,performance,tauxActivite);
+        Employe employe = new Employe("Manage","Manager","C12345",LocalDate.now(),2500d,1,tauxActivite);
 
         //When
-        Integer nbRtt = employe.getNbRtt(d);
+        Integer nbRtt = employe.getNbRtt(date);
         //Then
         Assertions.assertThat(nbRtt).isEqualTo(nbRttAttendu);
     }

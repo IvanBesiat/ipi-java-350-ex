@@ -209,13 +209,55 @@ public class EmployeServiceTest {
 
     @ParameterizedTest
     @CsvSource({
-            "'C12345',2,800,1000,1,1",
-            "'C12345',1,950,1000,1,1",
-            "'C12345',1,1200,1000,1,2",
-            "'C12345',1,1300,1000,1,5"
+            "2,0,1000,1,1",
+            "2,800,0,1,7",
+            "2,800,750,1,4",
+            "2,800,800,1,2",
+            "2,850,800,1,4",
+            "2,850,1000,1,1",
+            "2,850,1000,1,1",
+            "2,950,1000,1,2",
+            "2,950,950,1,2",
+            "2,950,900,1,4",
+            "2,1000,1000,1,2",
+            "2,1050,1000,1,2",
+            "2,1050,1050,1,2",
+            "2,1100,1000,1,4",
+            "2,1200,1000,1,4",
+            "2,1200,1200,1,2",
+            "2,1300,1000,1,7",
+            "1,800,750,1,2",
+            "1,800,800,1,1",
+            "1,850,800,1,2",
+            "1,850,1000,1,1",
+            "1,850,1000,1,1",
+            "1,950,1000,1,1",
+            "1,950,950,1,1",
+            "1,950,900,1,2",
+            "1,1000,1000,1,1",
+            "1,1050,1000,1,1",
+            "1,1050,1050,1,1",
+            "1,1100,1000,1,2",
+            "1,1200,1000,1,2",
+            "1,1200,1200,1,1",
+            "1,1300,1000,1,6",
+            "3,800,750,1,5",
+            "3,800,800,1,4",
+            "3,850,800,1,5",
+            "3,850,1000,1,1",
+            "3,850,1000,1,1",
+            "3,950,1000,1,4",
+            "3,950,950,1,4",
+            "3,950,900,1,5",
+            "3,1000,1000,1,4",
+            "3,1050,1000,1,4",
+            "3,1050,1050,1,4",
+            "3,1100,1000,1,5",
+            "3,1200,1000,1,5",
+            "3,1200,1200,1,4",
+            "3,1300,1000,1,8"
     })
     void testCalculPerfCommercial(
-            String matricule,
             Integer performance,
             Long caTraite,
             Long objectifCa,
@@ -223,13 +265,13 @@ public class EmployeServiceTest {
             Integer performanceMoy
     ) throws EmployeException {
         //Given
-        Employe employe = new Employe("Manage","Manager",matricule,LocalDate.now(),2500d,performance,tauxActivite);
-        Mockito.when(employeRepository.findByMatricule(matricule)).thenReturn(employe);
-        Mockito.when(employeRepository.avgPerformanceWhereMatriculeStartsWith("C")).thenReturn(5D);
+        Employe employe = new Employe("Manage","Manager","C12345",LocalDate.now(),2500d,performance,tauxActivite);
+        Mockito.when(employeRepository.findByMatricule("C12345")).thenReturn(employe);
+        Mockito.when(employeRepository.avgPerformanceWhereMatriculeStartsWith("C")).thenReturn(2D);
         Mockito.when(employeRepository.save(Mockito.any(Employe.class))).thenAnswer(AdditionalAnswers.returnsFirstArg());
 
         //When
-        employeService.calculPerformanceCommercial(matricule,caTraite,objectifCa);
+        employeService.calculPerformanceCommercial("C12345",caTraite,objectifCa);
         //Then
         Assertions.assertThat(employe.getPerformance()).isEqualTo(performanceMoy);
     }
