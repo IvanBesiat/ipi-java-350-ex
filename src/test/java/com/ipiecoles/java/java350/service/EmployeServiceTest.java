@@ -25,7 +25,7 @@ public class EmployeServiceTest {
     private EmployeRepository employeRepository;
 
     @Test
-    public void testEmbaucheEmployeWithEmptyDB() throws EmployeException {
+    void testEmbaucheEmployeWithEmptyDB() throws EmployeException {
         //given
         Mockito.when(employeRepository.findLastMatricule()).thenReturn(null);
         Mockito.when(employeRepository.findByMatricule("M00001")).thenReturn(null);
@@ -46,7 +46,7 @@ public class EmployeServiceTest {
     }
 
     @Test
-    public void testEmbaucheEmployeWith1Employe() throws EmployeException {
+    void testEmbaucheEmployeWith1Employe() throws EmployeException {
         //given
         Mockito.when(employeRepository.findLastMatricule()).thenReturn("00001");
         Mockito.when(employeRepository.findByMatricule("C00002")).thenReturn(null);
@@ -67,7 +67,7 @@ public class EmployeServiceTest {
     }
 
     @Test
-    public void testEmbaucheEmployeWithTempsPartielNull() throws EmployeException {
+    void testEmbaucheEmployeWithTempsPartielNull() throws EmployeException {
         //given
         Mockito.when(employeRepository.findLastMatricule()).thenReturn(null);
         Mockito.when(employeRepository.findByMatricule("C00001")).thenReturn(null);
@@ -88,7 +88,7 @@ public class EmployeServiceTest {
     }
 
     @Test
-    public void testEmbaucheEmployeWithMaxMatricule() {
+    void testEmbaucheEmployeWithMaxMatricule() {
         //given
         Mockito.when(employeRepository.findLastMatricule()).thenReturn("99999");
         //when
@@ -99,7 +99,7 @@ public class EmployeServiceTest {
     }
 
     @Test
-    public void testEmbaucheEmployeWithExistingMatricule() {
+    void testEmbaucheEmployeWithExistingMatricule() {
         //given
         Mockito.when(employeRepository.findLastMatricule()).thenReturn(null);
         Mockito.when(employeRepository.findByMatricule("C00001")).thenReturn(new Employe());
@@ -111,7 +111,7 @@ public class EmployeServiceTest {
     }
 
     @Test
-    public void testEmbaucheEmployeWithEmployeNull() {
+    void testEmbaucheEmployeWithEmployeNull() {
         //given
         String matricule = "C12345";
         Long caTraite = 1L;
@@ -125,7 +125,7 @@ public class EmployeServiceTest {
     }
 
     @Test
-    public void testCalculPerformanceCommercialWithCANegative(){
+    void testCalculPerformanceCommercialWithCANegative(){
             String matricule = "C12345";
             Long caTraite = -1L;
             Long objectifCa =1L;
@@ -139,7 +139,7 @@ public class EmployeServiceTest {
     }
 
     @Test
-    public void testCalculPerformanceCommercialWithCANull(){
+    void testCalculPerformanceCommercialWithCANull(){
         String matricule = "C12345";
         Long caTraite = null;
         Long objectifCa =1L;
@@ -153,7 +153,7 @@ public class EmployeServiceTest {
     }
 
     @Test
-    public void testCalculPerformanceCommercialWithObjectyifCaNull(){
+    void testCalculPerformanceCommercialWithObjectyifCaNull(){
         String matricule = "C12345";
         Long caTraite = 1L;
         Long objectifCa = null;
@@ -167,7 +167,7 @@ public class EmployeServiceTest {
     }
 
     @Test
-    public void testCalculPerformanceCommercialWithObjectyifCaNegative(){
+    void testCalculPerformanceCommercialWithObjectyifCaNegative(){
         String matricule = "C12345";
         Long caTraite = 1L;
         Long objectifCa = -1L;
@@ -181,21 +181,20 @@ public class EmployeServiceTest {
     }
 
     @Test
-    public void testCalculPerformanceCommercialWithMatriculeNull(){
-        String matricule = null;
+    void testCalculPerformanceCommercialWithMatriculeNull(){
         Long caTraite = 1L;
         Long objectifCa = 1L;
 
         //given
         //when
-        Throwable thrown = Assertions.catchThrowable(() -> employeService.calculPerformanceCommercial(matricule, caTraite, objectifCa));
+        Throwable thrown = Assertions.catchThrowable(() -> employeService.calculPerformanceCommercial(null, caTraite, objectifCa));
         //then
         Assertions.assertThat(thrown).isInstanceOf(EmployeException.class)
                 .hasMessageContaining("Le matricule ne peut être null et doit commencer par un C !");
     }
 
     @Test
-    public void testCalculPerformanceCommercialWithMatriculeNotCommercial(){
+    void testCalculPerformanceCommercialWithMatriculeNotCommercial(){
         String matricule = "M12345";
         Long caTraite = 1L;
         Long objectifCa = 1L;
@@ -211,14 +210,11 @@ public class EmployeServiceTest {
     @ParameterizedTest
     @CsvSource({
             "'C12345',2,800,1000,1,1",
-            "'C12345',1,2,100,1,1",
-            "'C12345',1,3,1,1,5",
-            "'C12345',1,4,1,1,5",
-            "'C12345',1,1,2,1,1",
-            "'C12345',1,1,3,0.5,1",
-            "'C12345',1,1,4,0.5,1"
+            "'C12345',1,950,1000,1,1",
+            "'C12345',1,1200,1000,1,2",
+            "'C12345',1,1300,1000,1,5"
     })
-    public void testCalculPerfCommercial(
+    void testCalculPerfCommercial(
             String matricule,
             Integer performance,
             Long caTraite,
@@ -229,7 +225,9 @@ public class EmployeServiceTest {
         //Given
         Employe employe = new Employe("Manage","Manager",matricule,LocalDate.now(),2500d,performance,tauxActivite);
         Mockito.when(employeRepository.findByMatricule(matricule)).thenReturn(employe);
-        Mockito.when(employeRepository.avgPerformanceWhereMatriculeStartsWith("C")).thenReturn(10D);
+        Mockito.when(employeRepository.avgPerformanceWhereMatriculeStartsWith("C")).thenReturn(5D);
+        Mockito.when(employeRepository.save(Mockito.any(Employe.class))).thenAnswer(AdditionalAnswers.returnsFirstArg());
+
         //When
         employeService.calculPerformanceCommercial(matricule,caTraite,objectifCa);
         //Then
