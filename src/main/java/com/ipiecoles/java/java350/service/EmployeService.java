@@ -18,7 +18,7 @@ import java.time.LocalDate;
 @Service
 public class EmployeService {
 
-    private Logger LOG = LoggerFactory.getLogger(this.getClass());
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private EmployeRepository employeRepository;
@@ -37,28 +37,28 @@ public class EmployeService {
      */
     public void embaucheEmploye(String nom, String prenom, Poste poste, NiveauEtude niveauEtude, Double tempsPartiel) throws EmployeException, EntityExistsException {
 
-        LOG.info("Embauche de l'employé : {} {} {} {} {}", nom, prenom , poste, niveauEtude, tempsPartiel);
+        logger.info("Embauche de l'employé : {} {} {} {} {}", nom, prenom , poste, niveauEtude, tempsPartiel);
         //Récupération du type d'employé à partir du poste
-        LOG.trace("Récupération du type d'employé à partir du poste {}", poste);
+        logger.trace("Récupération du type d'employé à partir du poste {}", poste);
         String typeEmploye = poste.name().substring(0,1);
 
         //Récupération du dernier matricule
-        LOG.trace("Récupération du dernier matricule...");
+        logger.trace("Récupération du dernier matricule...");
         String lastMatricule = employeRepository.findLastMatricule();
         if(lastMatricule == null){
             lastMatricule = Entreprise.MATRICULE_INITIAL;
-            LOG.warn("Aucun employe trouvé, initialisation du matricule initial {}", Entreprise.MATRICULE_INITIAL);
+            logger.warn("Aucun employe trouvé, initialisation du matricule initial {}", Entreprise.MATRICULE_INITIAL);
         }
         //... et incrémentation
-        LOG.trace("Incrémentation du dernier matricule");
+        logger.trace("Incrémentation du dernier matricule");
         Integer numeroMatricule = Integer.parseInt(lastMatricule) + 1;
 
         if(numeroMatricule >= 100000){
-            LOG.error("Limite des 100000 matricules atteinte !");
+            logger.error("Limite des 100000 matricules atteinte !");
             throw new EmployeException("Limite des 100000 matricules atteinte !");
         }
         else if(numeroMatricule == 90000){
-            LOG.warn("Le nombre d'employé actuellement enregistré est de {}." +
+            logger.warn("Le nombre d'employé actuellement enregistré est de {}." +
                     "Il ne reste plus que 9999 entrées possible avant la limite.",numeroMatricule);
         }
 
@@ -66,32 +66,32 @@ public class EmployeService {
         //On complète le numéro avec des 0 à gauche
         String matricule = "00000" + numeroMatricule;
         matricule = typeEmploye + matricule.substring(matricule.length() - 5);
-        LOG.trace("Matricule calculé : {}", matricule);
+        logger.trace("Matricule calculé : {}", matricule);
 
         //On vérifie l'existence d'un employé avec ce matricule
-        LOG.trace("Vérification de l'existence d'un employé avec ce matricule");
+        logger.trace("Vérification de l'existence d'un employé avec ce matricule");
         if(employeRepository.findByMatricule(matricule) != null){
-            LOG.error("L'employé de matricule {} existe déjà en BDD", matricule);
+            logger.error("L'employé de matricule {} existe déjà en BDD", matricule);
             throw new EntityExistsException("L'employé de matricule " + matricule + " existe déjà en BDD");
         }
 
         //Calcul du salaire
         Double salaire = Entreprise.COEFF_SALAIRE_ETUDES.get(niveauEtude) * Entreprise.SALAIRE_BASE;
         if(tempsPartiel != null){
-            LOG.info("Calcul du salaire en fonction du rythme de travail");
+            logger.info("Calcul du salaire en fonction du rythme de travail");
             salaire = salaire * tempsPartiel;
         }
         salaire = Math.round(salaire * 100) / 100d;
-        LOG.info("Salaire calculé : {}", salaire);
+        logger.info("Salaire calculé : {}", salaire);
 
         //Création et sauvegarde en BDD de l'employé.
         Employe employe = new Employe(nom, prenom, matricule, LocalDate.now(), salaire, Entreprise.PERFORMANCE_BASE, tempsPartiel);
-        LOG.info("Employé avant la sauvegarde {}", employe);
+        logger.info("Employé avant la sauvegarde {}", employe);
 
         employe = employeRepository.save(employe);
 
-        LOG.info("Employé après la sauvegarde {}", employe);
-        LOG.trace("Fin de la méthdoe embaucheEmploye");
+        logger.info("Employé après la sauvegarde {}", employe);
+        logger.trace("Fin de la méthdoe embaucheEmploye");
     }
 
 
