@@ -1,5 +1,7 @@
 package com.ipiecoles.java.java350.model;
 
+import com.ipiecoles.java.java350.exception.EmployeException;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -45,10 +47,11 @@ public class Employe {
 
     /**
      * Méthode calculant le nombre d'années d'ancienneté à partir de la date d'embauche
-     * @return
+     *
+     * @return le nombre d'années d'ancienneté de l'employé
      */
     public Integer getNombreAnneeAnciennete() {
-        if(dateEmbauche == null || dateEmbauche.isAfter(LocalDate.now()))
+        if (dateEmbauche == null || dateEmbauche.isAfter(LocalDate.now()))
             return 0;
         return LocalDate.now().getYear() - dateEmbauche.getYear();
     }
@@ -57,29 +60,33 @@ public class Employe {
         return Entreprise.NB_CONGES_BASE + this.getNombreAnneeAnciennete();
     }
 
-    public Integer getNbRtt(){
+    public Integer getNbRtt() {
         return getNbRtt(LocalDate.now());
     }
 
-    public Integer getNbRtt(LocalDate d){
-        int i1 = d.isLeapYear() ? 365 : 366;
-        int nbRttBase = 104;
-        switch (LocalDate.of(d.getYear(),1,1).getDayOfWeek()){
-        case THURSDAY: if(d.isLeapYear()) nbRttBase =  nbRttBase + 1; break;
-        case FRIDAY:
-            if(d.isLeapYear()){
-                nbRttBase =  nbRttBase + 2;
-            }
-            else {
-                nbRttBase =  nbRttBase + 1;
-            }
-            break;
-        case SATURDAY:nbRttBase = nbRttBase + 1;
-                    break;
+    public Integer getNbRtt(LocalDate d) {
+        int nbJourAnnee = d.isLeapYear() ? 366 : 365;
+        int weekendDay = 104;
+        switch (LocalDate.of(d.getYear(), 1, 1).getDayOfWeek()) {
+            case THURSDAY:
+                if (d.isLeapYear()) weekendDay = weekendDay + 1;
+                break;
+            case FRIDAY:
+                if (d.isLeapYear()) {
+                    weekendDay = weekendDay + 2;
+                } else {
+                    weekendDay = weekendDay + 1;
+                }
+                break;
+            case SATURDAY:
+                weekendDay = weekendDay + 1;
+                break;
+            default :
+                break;
         }
         int monInt = (int) Entreprise.joursFeries(d).stream().filter(localDate ->
                 localDate.getDayOfWeek().getValue() <= DayOfWeek.FRIDAY.getValue()).count();
-        return (int) Math.ceil((i1 - Entreprise.NB_JOURS_MAX_FORFAIT - nbRttBase - Entreprise.NB_CONGES_BASE - monInt) * tempsPartiel);
+        return (int) Math.ceil((nbJourAnnee - Entreprise.NB_JOURS_MAX_FORFAIT - weekendDay - Entreprise.NB_CONGES_BASE - monInt) * tempsPartiel);
     }
 
     /**
@@ -88,24 +95,24 @@ public class Employe {
      * Pour les autres employés, la prime de base plus éventuellement la prime de performance calculée si l'employé
      * n'a pas la performance de base, en multipliant la prime de base par un l'indice de performance
      * (égal à la performance à laquelle on ajoute l'indice de prime de base)
-     *
+     * <p>
      * Pour tous les employés, une prime supplémentaire d'ancienneté est ajoutée en multipliant le nombre d'année
      * d'ancienneté avec la prime d'ancienneté. La prime est calculée au pro rata du temps de travail de l'employé
      *
      * @return la prime annuelle de l'employé en Euros et cents
      */
     //Matricule, performance, date d'embauche, temps partiel, prime
-    public Double getPrimeAnnuelle(){
+    public Double getPrimeAnnuelle() {
         //Calcule de la prime d'ancienneté
         Double primeAnciennete = Entreprise.PRIME_ANCIENNETE * this.getNombreAnneeAnciennete();
         Double prime;
         //Prime du manager (matricule commençant par M) : Prime annuelle de base multipliée par l'indice prime manager
         //plus la prime d'anciennté.
-        if(matricule != null && matricule.startsWith("M")) {
+        if (matricule != null && matricule.startsWith("M")) {
             prime = Entreprise.primeAnnuelleBase() * Entreprise.INDICE_PRIME_MANAGER + primeAnciennete;
         }
         //Pour les autres employés en performance de base, uniquement la prime annuelle plus la prime d'ancienneté.
-        else if (this.performance == null || Entreprise.PERFORMANCE_BASE.equals(this.performance)){
+        else if (this.performance == null || Entreprise.PERFORMANCE_BASE.equals(this.performance)) {
             prime = Entreprise.primeAnnuelleBase() + primeAnciennete;
         }
         //Pour les employés plus performance, on bonnifie la prime de base en multipliant par la performance de l'employé
@@ -118,7 +125,14 @@ public class Employe {
     }
 
     //Augmenter salaire
-    //public void augmenterSalaire(double pourcentage){}
+    public void augmenterSalaire(double pourcentage) throws EmployeException {
+        if(pourcentage <=0){
+            throw new EmployeException("Une auguementation de salaire ne peut pas être null ou négative.");
+        }
+        else{
+            this.salaire += this.salaire * pourcentage / 100;
+        }
+    }
 
     public Long getId() {
         return id;
@@ -138,9 +152,8 @@ public class Employe {
     /**
      * @param nom the nom to set
      */
-    public Employe setNom(String nom) {
+    public void setNom(String nom) {
         this.nom = nom;
-        return this;
     }
 
     /**
@@ -217,17 +230,16 @@ public class Employe {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("Employe{");
-        sb.append("id=").append(id);
-        sb.append(", nom='").append(nom).append('\'');
-        sb.append(", prenom='").append(prenom).append('\'');
-        sb.append(", matricule='").append(matricule).append('\'');
-        sb.append(", dateEmbauche=").append(dateEmbauche);
-        sb.append(", salaire=").append(salaire);
-        sb.append(", performance=").append(performance);
-        sb.append(", tempsPartiel=").append(tempsPartiel);
-        sb.append('}');
-        return sb.toString();
+        String sb = "Employe{" + "id=" + id +
+                ", nom='" + nom + '\'' +
+                ", prenom='" + prenom + '\'' +
+                ", matricule='" + matricule + '\'' +
+                ", dateEmbauche=" + dateEmbauche +
+                ", salaire=" + salaire +
+                ", performance=" + performance +
+                ", tempsPartiel=" + tempsPartiel +
+                '}';
+        return sb;
     }
 
     @Override

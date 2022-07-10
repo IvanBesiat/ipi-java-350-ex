@@ -33,7 +33,7 @@
     </appender>
     <root level="info">
         <appender-ref ref="STDOUT" />
-        <appender-ref ref="ERROR_LOG" />
-        <appender-ref ref="LOGS" />
+<!--        <appender-ref ref="ERROR_LOG" />-->
+<!--        <appender-ref ref="LOGS" />-->
     </root>
 </configuration>
